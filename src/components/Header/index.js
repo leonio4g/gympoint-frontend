@@ -1,9 +1,18 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { signOut } from '~/store/modules/auth/actions';
 import logo from '~/assets/logo-gympoint.svg';
 import { Link } from 'react-router-dom';
 import { Container } from './styles';
 
 export default function Header() {
+
+  const dispatch = useDispatch();
+
+  function handleSignOut(){
+    dispatch(signOut());
+  }
+
   return (
     <Container>
       <nav>
@@ -17,7 +26,7 @@ export default function Header() {
 
       <aside>
         <strong>Administrador</strong>
-        <button type="button" >Sair</button>
+        <button type="button" onClick={handleSignOut} >Sair</button>
       </aside>
     </Container>
   );
