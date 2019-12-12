@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 
 export const Container = styled.div`
   background: #fff;
@@ -6,7 +8,7 @@ export const Container = styled.div`
   padding:0 20px;
   display:flex;
   align-items:center;
-  justify-content: space-between;
+  justify-content: space-evenly;
 
 
   nav{
@@ -20,7 +22,7 @@ export const Container = styled.div`
     }
 
     a{
-      color:#999;
+
       font-size:15px;
       font-weight:bold;
       text-transform:uppercase;
@@ -41,4 +43,11 @@ export const Container = styled.div`
       color:red;
     }
   }
+`;
+export const ToLink = styled(Link)`
+
+  padding:20px;
+  font-size:15px;
+  color: ${props => props.active ?  "#333" : "#999" }
+
 `;

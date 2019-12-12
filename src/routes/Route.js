@@ -19,7 +19,7 @@ export default function RouteWapper({
   }
 
   if(signed && !isPrivate){
-    return <Redirect to="/Students"/>
+    return <Redirect to="/students"/>
   }
 
   const Layout = signed ? DefaultLayout : AuthLayout;

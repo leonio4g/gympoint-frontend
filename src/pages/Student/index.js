@@ -1,14 +1,64 @@
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
+import api from '~/services/api';
+import { MdDelete, MdCreate } from 'react-icons/md';
+import history from '~/services/history';
+import { useDispatch } from 'react-redux';
+import { studentData } from '~/store/modules/students/actions';
 import { Container, Header, StudentTable, Content } from './styles';
 
 export default function Student() {
+
+  const dispatch = useDispatch();
+  const [students, setStudents ]= useState([]);
+  const [ search, setSearch ] = useState([]);
+
+  useEffect(() => {
+    async function listStudents(){
+      const response = await api.get('student', {
+        params: { name: search }
+      });
+
+      setStudents(response.data);
+    }
+    listStudents();
+  },[setStudents, search]);
+
+  function handleRegister(){
+    history.push('/students/create')
+  }
+
+  function handleSeach(e){
+    setSearch(e.target.value);
+  }
+
+  function handleEdit(student){
+    dispatch(studentData(student));
+    history.push('/students/edit');
+  }
+
+  async function handleDelete(student){
+
+    const confirm = window.confirm(`Cofirma que Quer deletar ${student.name}`);//eslint-disable-line
+    if(confirm){
+    await api.delete(`student/${student.id}`);
+
+    setStudents(
+      students.filter(e => {
+        return e.id !== student.id;
+      })
+    )
+
+    }
+  }
+
   return (
     <Container>
       <Header>
         <p>Gerenciando Alunos</p>
-        <button type="submit">Cadastrar</button>
-        <input type="text" placeholder="Buscar Aluno"/>
+        <div>
+        <button type="submit" onClick={handleRegister} >Cadastrar</button>
+        <input name="name"type="text" onChange={e => handleSeach(e)} placeholder="Buscar Aluno"/>
+        </div>
       </Header>
       <Content>
       <StudentTable>
@@ -17,23 +67,32 @@ export default function Student() {
             <th>Name</th>
             <th>Email</th>
             <th>Idade</th>
-            <th />
+            <th></th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>Fulano</td>
-            <td>leonio@gmail.com</td>
-            <td>22</td>
-            <td>
-              <button>Editar</button>
-              <button>Excluir</button>
-            </td>
-          </tr>
-        </tbody>
-      </StudentTable>
 
+        <tbody >
+              {students.map(student =>(
+               <tr  key={student.id} >
+               <td>{student.name}</td>
+               <td>{student.email}</td>
+               <td>{student.age}</td>
+               <td id="actions" >
+               <button id="edit" onClick={() => handleEdit(student)} >
+                 <MdCreate size={20} color="#4d85ee" />
+               </button>
+               <button id="delete" onClick={() => handleDelete(student)} >
+               <MdDelete size={20} color="#de3b3b" />
+               </button>
+               </td>
+               </tr>
+
+))}
+      </tbody>
+
+      </StudentTable>
       </Content>
+
     </Container>
   );
 }

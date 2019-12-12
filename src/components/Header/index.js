@@ -1,13 +1,16 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { signOut } from '~/store/modules/auth/actions';
-import logo from '~/assets/logo-gympoint.svg';
 import { Link } from 'react-router-dom';
-import { Container } from './styles';
+import logo from '~/assets/logo-gympoint.svg';
+import { useRouteMatch } from 'react-router-dom';
+import { Container, ToLink } from './styles';
 
 export default function Header() {
 
   const dispatch = useDispatch();
+  const { path } = useRouteMatch();
+
 
   function handleSignOut(){
     dispatch(signOut());
@@ -16,12 +19,14 @@ export default function Header() {
   return (
     <Container>
       <nav>
+        <Link to="/students" >
         <img src={logo} alt="GymPoint"/>
+        </Link>
 
-        <Link to="/students/list" >Aluno</Link>
-        <Link to="/plans/list" >Planos</Link>
-        <Link to="/register/list">Matriculas</Link>
-        <Link to="/help-order/list">Pedidos de Auxílios</Link>
+        <ToLink to="/students" active={path.indexOf('student') > 0} >Aluno</ToLink>
+        <ToLink to="/plans"  active={path.indexOf('plans') > 0} >Planos</ToLink>
+        <ToLink to="/register/list"  active={path.indexOf('register') > 0}>Matriculas</ToLink>
+        <ToLink to="/help-order/list"  active={path.indexOf('help') > 0}>Pedidos de Auxílios</ToLink>
       </nav>
 
       <aside>
