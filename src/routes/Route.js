@@ -9,29 +9,30 @@ import { store } from '~/store';
 
 export default function RouteWapper({
   component: Component,
-  isPrivate= false,
+  isPrivate = false,
   ...rest
 }) {
-  const {signed} = store.getState().auth;
+  const { signed } = store.getState().auth;
 
-  if(!signed && isPrivate){
+  if (!signed && isPrivate) {
     return <Redirect to="/" />
   }
 
-  if(signed && !isPrivate){
-    return <Redirect to="/students"/>
+  if (signed && !isPrivate) {
+    return <Redirect to="/students" />
   }
+
 
   const Layout = signed ? DefaultLayout : AuthLayout;
 
   return (
     <Route
-    {...rest}
-    render={props => (
-      <Layout>
-        <Component {...props}/>
-      </Layout>
-    )}
+      {...rest}
+      render={props => (
+        <Layout>
+          <Component {...props} />
+        </Layout>
+      )}
     />
   )
 
@@ -41,6 +42,6 @@ RouteWapper.propTypes = {
   component: PropTypes.oneOfType([PropTypes.element, PropTypes.func]).isRequired,
 }
 
-RouteWapper.defaultProps ={
+RouteWapper.defaultProps = {
   isPrivate: false,
 }

@@ -48,6 +48,6 @@ export const ToLink = styled(Link)`
 
   padding:20px;
   font-size:15px;
-  color: ${props => props.active ?  "#333" : "#999" }
+  color: ${props => props.active ?  "#999" : "#333"}
 
 `;

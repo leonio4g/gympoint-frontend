@@ -16,12 +16,6 @@ export function studentUpdateSuccess(student){
     payload: {student},
   }
 }
-export function studentDelete(id){
-  return{
-    type:'@student/STUDENT_DELETE',
-    payload: {students_id: id}
-  }
-}
 export function studentFailure(){
   return{
     type:'@student/STUDENT_FAILURE',

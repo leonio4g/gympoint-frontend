@@ -18,56 +18,56 @@ const schema = Yup.object().shape({
 
 export default function StudentCreate() {
 
-  async function handleSubmit(data){
-    try{
+  async function handleSubmit(data) {
+    try {
       await api.post('student', data);
       toast.success('Aluno Cadastrado com Sucesso');
       history.push('/students');
-    }catch(err){
+    } catch (err) {
       toast.error('Falha ao Cadastrar, Verifique os dados')
     }
   }
 
-  function handleBack(){
+  function handleBack() {
     history.push('/students');
   }
 
 
   return (
     <Container>
-       <Header>
+      <Header>
         <p>Cadastro de Aluno</p>
         <div>
-        <button id="voltar" type="button" onClick={handleBack} >Voltar</button>
-        <button id="salvar"type="submit" form="formsave" >Salvar</button>
+          <button id="voltar" type="button" onClick={handleBack} >Voltar</button>
+          <button id="salvar" type="submit" form="formsave" >Salvar</button>
 
         </div>
       </Header>
       <Content>
-      <Form id="formsave"schema={schema} onSubmit={handleSubmit}  >
-        <div id="column">
-        <Label>Nome Completo</Label>
-        <Input name="name" type="name" placeholder="Nome do Aluno" />
-        <Label>Endereço de Email</Label>
-        <Input name="email" type="email" placeholder="E-mail do Aluno" />
-        </div>
-        <div id="bottom">
-        <div id="row">
-        <div>
-        <Label>Idade</Label>
-        <Input name="age" type="age" placeholder="Idade do Aluno" />
-        </div>
-        <div>
-        <Label>Peso (em kg)</Label>
-        <Input name="weight" type="weight" placeholder="Peso do Aluno" />
-        </div>
-        <div>
-        <Label>Altura</Label>
-        <Input name="height" type="height" placeholder="Altura do Aluno" />
-        </div>
-        </div>
-        </div>
-      </Form>
+        <Form id="formsave" schema={schema} onSubmit={handleSubmit}  >
+          <div id="column">
+            <Label>Nome Completo</Label>
+            <Input name="name" type="name" placeholder="Nome do Aluno" />
+            <Label>Endereço de Email</Label>
+            <Input name="email" type="email" placeholder="E-mail do Aluno" />
+          </div>
+          <div id="bottom">
+            <div id="row">
+              <div>
+                <Label>Idade</Label>
+                <Input name="age" type="age" placeholder="Idade do Aluno" />
+              </div>
+              <div>
+                <Label>Peso (em kg)</Label>
+                <Input name="weight" type="weight" placeholder="Peso do Aluno" />
+              </div>
+              <div>
+                <Label>Altura</Label>
+                <Input name="height" type="height" placeholder="Altura do Aluno" />
+              </div>
+            </div>
+          </div>
+        </Form>
       </Content>
     </Container>
   );

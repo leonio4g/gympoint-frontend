@@ -29,17 +29,18 @@ form{
     width:99%;
     margin-bottom:5px;
   }
+  input[disabled]{
+    background:#ddd;
+  }
 
   div#column{
     display:flex;
     flex-direction:column;
-
   }
 
   div#row{
     display:flex;
     flex-direction:row;
-
     div{
       margin-right:9px;
       width:100%;
@@ -93,9 +94,9 @@ export const Label = styled.div`
   font-style: normal;
   font-weight: bold;
   font-size: 13px;
-  line-height: 16px;
+
   color: #444444;
-  margin-bottom: 3px;
+  margin-top: 6px;
   text-transform: uppercase;
   margin-bottom: 10px;
 `;

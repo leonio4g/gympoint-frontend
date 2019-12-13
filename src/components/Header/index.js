@@ -11,8 +11,7 @@ export default function Header() {
   const dispatch = useDispatch();
   const { path } = useRouteMatch();
 
-
-  function handleSignOut(){
+  function handleSignOut() {
     dispatch(signOut());
   }
 
@@ -20,13 +19,13 @@ export default function Header() {
     <Container>
       <nav>
         <Link to="/students" >
-        <img src={logo} alt="GymPoint"/>
+          <img src={logo} alt="GymPoint" />
         </Link>
 
-        <ToLink to="/students" active={path.indexOf('student') > 0} >Aluno</ToLink>
-        <ToLink to="/plans"  active={path.indexOf('plans') > 0} >Planos</ToLink>
-        <ToLink to="/register/list"  active={path.indexOf('register') > 0}>Matriculas</ToLink>
-        <ToLink to="/help-order/list"  active={path.indexOf('help') > 0}>Pedidos de Auxílios</ToLink>
+        <ToLink to="/students" >Aluno</ToLink>
+        <ToLink to="/plans"  >Planos</ToLink>
+        <ToLink to="/register">Matriculas</ToLink>
+        <ToLink to="/help-order/list">Pedidos de Auxílios</ToLink>
       </nav>
 
       <aside>
