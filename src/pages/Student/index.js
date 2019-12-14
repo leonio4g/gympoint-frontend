@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '~/services/api';
-import { MdDelete, MdCreate } from 'react-icons/md';
+import { MdDelete, MdCreate} from 'react-icons/md';
 import history from '~/services/history';
 import { useDispatch } from 'react-redux';
 import { studentData } from '~/store/modules/students/actions';
@@ -91,6 +91,7 @@ export default function Student() {
           </tbody>
 
         </StudentTable>
+
       </Content>
 
     </Container>

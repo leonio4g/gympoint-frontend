@@ -1,17 +1,16 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Form, Input } from '@rocketseat/unform';
-
-import { addMonths, format } from 'date-fns';
+import { addMonths, format, parseISO } from 'date-fns';
 import { formatPrice } from '~/util/format';
-import { toast } from 'react-toastify';
-
+import pt from 'date-fns/locale/pt-BR';
+import { useSelector, useDispatch } from 'react-redux';
 import ReactSelect from '../ReactSelect';
 import DatePickerInput from '../DatePickerInput';
 import ReactAsyncSelect from '../ReactAsyncSelect';
-
 import * as Yup from 'yup';
 import api from '~/services/api';
 import history from '~/services/history';
+import { enrollmentUpdateRequest } from '~/store/modules/enrollment/actions';
 
 import { Container, Header, Label, Content } from './styles';
 
@@ -24,36 +23,50 @@ const schema = Yup.object().shape({
 
 export default function EnrollmentCreate() {
 
+  const dispatch = useDispatch();
+  const enrollments = useSelector(state => state.enrollment.enrollments);
   const [ plans , setPlans] = useState([]);
-  const [ startDate, setStartDate ] = useState(null);
+  const [ startDate, setStartDate ] = useState('');
   const [ planSelect, setPlanSelect ] = useState('');
   const [ totalPrice, setTotalPrice ] = useState('');
 
   useEffect(() => {
+    async function loadlans() {
+      const response = await api.get('plans');
 
-      async function loadPlans(){
-        const response  = await api.get('plans');
+      const pSelect = response.data.find(
+        plan => plan.id === enrollments.plan.id
+      );
 
-     setPlans(response.data);
+      setPlanSelect(pSelect);
 
-      }
+      setPlans(response.data);
+    }
 
-    loadPlans();
+    setTotalPrice(formatPrice(enrollments.price));
+    setStartDate(enrollments.start_date);
 
-  },[ setPlans]);
-
+    loadlans();
+  }, [enrollments.plan_id, enrollments.price, enrollments.start_date]);
+ console.tron.log(startDate)
+ console.tron.log(planSelect.duration)
   const endDate = useMemo(() => {
-    if (planSelect !== '') {
-      setTotalPrice(formatPrice(planSelect.duration * planSelect.price));
+    if (planSelect !== '' && startDate !== null) {
+      const endDateFormatted = addMonths(parseISO(startDate), planSelect.duration);
+      console.tron.log(endDateFormatted)
+      setTotalPrice(formatPrice(planSelect.price * planSelect.duration));
+
+     return format(endDateFormatted, "dd'/'MM'/'Y", { locale: pt });
     }
 
-    if (startDate !== null && planSelect !== '') {
-      const endDateFormatted = addMonths(startDate, planSelect.duration);
-
-      return format(endDateFormatted, "dd'/'MM'/'Y");
+    if (enrollments && planSelect === '') {
+      return format(parseISO(enrollments.end_date), "dd'/'MM'/'Y", {
+        locale: pt,
+      });
     }
+
     return '';
-  }, [planSelect, startDate]);
+  }, [enrollments, planSelect, startDate]);
 
   const filterStudents = inputValue => {
     async function loadStudents() {
@@ -68,14 +81,10 @@ export default function EnrollmentCreate() {
   };
 
   async function handleSubmit(data) {
-    try {
-      await api.post('enrollments',data);
+    data.id = enrollments.id;
 
-      toast.success('Matricula Efetuada com Sucesso');
-      history.push('/register');
-    } catch (err) {
-      toast.error(err.response.data.error)
-    }
+    dispatch(enrollmentUpdateRequest(data));
+
   }
 
   function handleBack() {
@@ -100,10 +109,10 @@ export default function EnrollmentCreate() {
         </div>
       </Header>
       <Content>
-        <Form id="formsave" schema={schema} onSubmit={handleSubmit}  >
+        <Form  id="formsave" schema={schema} onSubmit={handleSubmit}  >
           <div id="column">
             <Label>Aluno</Label>
-            <ReactAsyncSelect name="students_id" options={loadOptions} />
+            <ReactAsyncSelect name="students_id" defaultValue={enrollments.student} options={loadOptions} />
           </div>
           <div id="row" >
             <div id="inputRow" >
@@ -115,6 +124,7 @@ export default function EnrollmentCreate() {
             onChange={plan => setPlanSelect(plan)}
             options={plans}
             name="plan_id"
+            defaultValue={enrollments.plan}
             />
             </div>
             </div>

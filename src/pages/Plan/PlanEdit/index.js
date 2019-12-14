@@ -22,6 +22,7 @@ const plan = useSelector(state => state.plans.plans);
 
   const [ duration , setDuration ] = useState('');
   const [ priceTotal , setPriceTotal ] = useState('');
+  console.tron.log(plan)
 
   useEffect(() => {
     function loadPrice(){

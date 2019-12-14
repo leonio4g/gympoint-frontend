@@ -4,6 +4,8 @@ import Route from './Route';
 
 import SignIn from '~/pages/SignIn';
 import Register from '~/pages/Register';
+import RegisterCreate from '~/pages/Register/RegisterCreate';
+import RegisterEdit from '~/pages/Register/RegisterEdit';
 import Student from '~/pages/Student';
 import StudentEdit from '~/pages/Student/StudentEdit';
 import StudentCreate from '~/pages/Student/StudentCreate';
@@ -16,11 +18,11 @@ export default function Routes() {
   return (
     <Switch>
       <Route exact path="/" component={SignIn} />
-      <Route path="/register" component={Register} isPrivate />
+      <Route exact path="/register" component={Register} isPrivate />
       <Route path="/register/create" component={RegisterCreate} isPrivate />
       <Route path="/register/edit" component={RegisterEdit} isPrivate />
       <Route exact path="/students" component={Student} isPrivate />
-      <Route exact path="/students/edit" component={StudentEdit} isPrivate />
+      <Route path="/students/edit" component={StudentEdit} isPrivate />
       <Route path="/students/create" component={StudentCreate} isPrivate />
       <Route exact path="/plans" component={Plan} isPrivate />
       <Route path="/plans/create" component={PlanCreate} isPrivate />

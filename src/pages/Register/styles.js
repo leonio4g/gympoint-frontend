@@ -60,7 +60,7 @@ export const Header = styled.div`
   }
 `;
 
-export const StudentTable = styled.table`
+export const EnrollmentTable = styled.table`
   width:100%;
 
   thead th{

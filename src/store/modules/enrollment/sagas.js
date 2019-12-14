@@ -4,16 +4,13 @@ import { toast } from 'react-toastify';
 import api from '~/services/api';
 import history from '~/services/history';
 
-export function* planUpdate({ payload }) {
+export function* enrollmentUpdate({ payload }) {
 
   try {
-    const { id, title, duration, price } = payload.data;
 
-    yield call(api.put, `plans/${id}`, {
-      title,
-      duration,
-      price,
-    });
+    const {id} = payload.data;
+
+    yield call(api.put, `enrollments/${id}`);
 
     toast.success('Plano Editado com Sucesso');
 
@@ -23,6 +20,6 @@ export function* planUpdate({ payload }) {
   }
 }
 export default all([
-  takeLatest('@plan/PLAN_UPDATE_REQUEST', planUpdate),
+  takeLatest('@enrollment/ENROLLMENT_UPDATE_REQUEST', enrollmentUpdate),
 
 ]);

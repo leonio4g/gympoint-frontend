@@ -24,7 +24,7 @@ export default function StudentCreate() {
       toast.success('Aluno Cadastrado com Sucesso');
       history.push('/students');
     } catch (err) {
-      toast.error('Falha ao Cadastrar, Verifique os dados')
+      toast.error(err.response.data.error)
     }
   }
 
