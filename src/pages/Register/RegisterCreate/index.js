@@ -29,6 +29,7 @@ export default function EnrollmentCreate() {
   const [ planSelect, setPlanSelect ] = useState('');
   const [ totalPrice, setTotalPrice ] = useState('');
 
+
   useEffect(() => {
 
       async function loadPlans(){

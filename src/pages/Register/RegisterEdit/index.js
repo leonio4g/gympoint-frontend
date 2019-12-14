@@ -5,7 +5,7 @@ import { formatPrice } from '~/util/format';
 import pt from 'date-fns/locale/pt-BR';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactSelect from '../ReactSelect';
-import DatePickerInput from '../DatePickerInput';
+import DatePickerInput from 'react-datepicker';
 import ReactAsyncSelect from '../ReactAsyncSelect';
 import * as Yup from 'yup';
 import api from '~/services/api';
@@ -24,21 +24,23 @@ const schema = Yup.object().shape({
 export default function EnrollmentCreate() {
 
   const dispatch = useDispatch();
+
   const enrollments = useSelector(state => state.enrollment.enrollments);
   const [ plans , setPlans] = useState([]);
   const [ startDate, setStartDate ] = useState('');
   const [ planSelect, setPlanSelect ] = useState('');
   const [ totalPrice, setTotalPrice ] = useState('');
 
+
   useEffect(() => {
     async function loadlans() {
       const response = await api.get('plans');
 
-      const pSelect = response.data.find(
+      const Select = response.data.find(
         plan => plan.id === enrollments.plan.id
       );
 
-      setPlanSelect(pSelect);
+      setPlanSelect(Select);
 
       setPlans(response.data);
     }
@@ -46,14 +48,18 @@ export default function EnrollmentCreate() {
     setTotalPrice(formatPrice(enrollments.price));
     setStartDate(enrollments.start_date);
 
+
     loadlans();
-  }, [enrollments.plan_id, enrollments.price, enrollments.start_date]);
- console.tron.log(startDate)
- console.tron.log(planSelect.duration)
+  }, [ enrollments.plan.id, enrollments.price, enrollments.start_date]);
+
+  const startFormatted = useMemo(() => {
+   return format(parseISO(startDate) , "dd'/'MM'/'Y", { locale: pt });
+  })
+
   const endDate = useMemo(() => {
     if (planSelect !== '' && startDate !== null) {
       const endDateFormatted = addMonths(parseISO(startDate), planSelect.duration);
-      console.tron.log(endDateFormatted)
+
       setTotalPrice(formatPrice(planSelect.price * planSelect.duration));
 
      return format(endDateFormatted, "dd'/'MM'/'Y", { locale: pt });
@@ -63,6 +69,7 @@ export default function EnrollmentCreate() {
       return format(parseISO(enrollments.end_date), "dd'/'MM'/'Y", {
         locale: pt,
       });
+
     }
 
     return '';
@@ -95,7 +102,7 @@ export default function EnrollmentCreate() {
     new Promise(resolve => {
       setTimeout(() => {
         resolve(filterStudents(inputValue));
-      }, 100);
+      }, 1000);
     });
 
   return (
@@ -132,7 +139,9 @@ export default function EnrollmentCreate() {
                 <Label>Data de inicio</Label>
                 <DatePickerInput
                 name="start_date"
-                onChangeDate={data => setStartDate(data)}
+                dateFormat="dd'/'MM'/'y"
+                value={startFormatted}
+                onChange={data => setStartDate(data)}
                 />
                 </div>
                 <div id="inputRow" >
