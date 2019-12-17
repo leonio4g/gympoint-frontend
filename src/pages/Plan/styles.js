@@ -1,12 +1,10 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
 
-
 export const Container = styled.div`
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 export const Content = styled.div`
   background: #fff;
@@ -21,7 +19,7 @@ export const Header = styled.div`
   justify-content: space-between;
   margin-top: 30px;
   max-width: 1200px;
-  width:100%;
+  width: 100%;
 
   p {
     font-size: 25px;
@@ -43,52 +41,36 @@ export const Header = styled.div`
       background: ${darken(0.02, '#ee4d64')};
     }
   }
-  input {
-    background: #ffffff;
-    border-color: black;
-    border: 0px;
-    border-radius: 4px;
-    height: 36px;
-    padding: 0 15px;
-    color: #444444;
-    border: 0.8px solid #dddddd;
-    margin-left: 15px;
-    text-align: center;
-    &::placeholder {
-      color: #999999;
-    }
-  }
 `;
 
 export const PlanTable = styled.table`
-  width:100%;
+  width: 100%;
 
-  thead th{
+  thead th {
     color: #333333;
-    padding:12px;
+    padding: 12px;
     text-align: left;
   }
 
   tbody td {
-    padding:12px;
+    padding: 12px;
     border-bottom: 1px solid #eee;
-    color:#333;
-
+    color: #333;
   }
 
-  tbody td#actions{
+  tbody td#actions {
     text-align: right;
   }
 
   button {
-      background:none;
-      border:0;
-      padding:15px;
+    background: none;
+    border: 0;
+    padding: 15px;
   }
-  button#edit{
-    color:#4d85ee;
+  button#edit {
+    color: #4d85ee;
   }
-  button#delete{
-    color:#de3b3b;
+  button#delete {
+    color: #de3b3b;
   }
 `;

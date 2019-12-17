@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
+import * as Yup from 'yup';
 import { formatPrice } from '~/util/format';
 import { Container, Header, Label, Content } from './styles';
-import * as Yup from 'yup';
 import api from '~/services/api';
 import history from '~/services/history';
-
 
 const schema = Yup.object().shape({
   title: Yup.string().required('Title Obrigatório'),
@@ -14,22 +13,18 @@ const schema = Yup.object().shape({
   price: Yup.string().required('O preço e obrigatório'),
 });
 
-
 export default function PlanCreate() {
+  const [price, setPrice] = useState('');
+  const [duration, setDuration] = useState('');
+  const [priceTotal, setPriceTotal] = useState('');
 
-  const [ price, setPrice ] = useState('');
-  const [ duration , setDuration ] = useState('');
-  const [ priceTotal , setPriceTotal ] = useState('');
-
-
-  useEffect(() =>{
+  useEffect(() => {
     setPriceTotal(duration * price);
-    formatPrice(priceTotal)
-  },[duration, price, priceTotal]);
+    formatPrice(priceTotal);
+  }, [duration, price, priceTotal]);
 
   async function handleSubmit(data) {
-
-    const { title, duration, price } = data;
+    const { title } = data;
     try {
       await api.post('plans', {
         title,
@@ -39,7 +34,7 @@ export default function PlanCreate() {
       toast.success('Plano Cadastrado com Sucesso');
       history.push('/plans');
     } catch (err) {
-      toast.error('Falha ao Cadastrar, Verifique os dados')
+      toast.error('Falha ao Cadastrar, Verifique os dados');
     }
   }
 
@@ -47,19 +42,21 @@ export default function PlanCreate() {
     history.push('/plans');
   }
 
-
   return (
     <Container>
       <Header>
         <p>Cadastro de Plano</p>
         <div>
-          <button id="voltar" type="button" onClick={handleBack} >Voltar</button>
-          <button id="salvar" type="submit" form="formsave" >Salvar</button>
-
+          <button id="voltar" type="button" onClick={handleBack}>
+            Voltar
+          </button>
+          <button id="salvar" type="submit" form="formsave">
+            Salvar
+          </button>
         </div>
       </Header>
       <Content>
-        <Form id="formsave" schema={schema} onSubmit={handleSubmit}  >
+        <Form id="formsave" schema={schema} onSubmit={handleSubmit}>
           <div id="column">
             <Label>Titulo do Plano</Label>
             <Input name="title" type="text" />
@@ -68,15 +65,28 @@ export default function PlanCreate() {
             <div id="row">
               <div>
                 <Label>Duração (em meses)</Label>
-                <Input name="duration" type="number" onChange={e => setDuration(e.target.value)} />
+                <Input
+                  name="duration"
+                  type="number"
+                  onChange={e => setDuration(e.target.value)}
+                />
               </div>
               <div>
                 <Label>Preço Mensal</Label>
-                <Input name="price" type="number" onChange={e => setPrice(e.target.value)} />
+                <Input
+                  name="price"
+                  type="number"
+                  onChange={e => setPrice(e.target.value)}
+                />
               </div>
               <div>
                 <Label>Preço Total</Label>
-                <Input name="total_price" disabled value={priceTotal} type="number"  />
+                <Input
+                  name="total_price"
+                  disabled
+                  value={priceTotal}
+                  type="number"
+                />
               </div>
             </div>
           </div>

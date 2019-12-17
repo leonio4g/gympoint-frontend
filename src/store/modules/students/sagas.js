@@ -5,12 +5,15 @@ import api from '~/services/api';
 import history from '~/services/history';
 
 export function* studentUpdate({ payload }) {
-
   try {
     const { id, name, email, age, weight, height } = payload.data;
 
     yield call(api.put, `student/${id}`, {
-      name, email, age, weight, height,
+      name,
+      email,
+      age,
+      weight,
+      height,
     });
 
     toast.success('Student Editado com Sucesso');
@@ -22,5 +25,4 @@ export function* studentUpdate({ payload }) {
 }
 export default all([
   takeLatest('@student/STUDENT_UPDATE_REQUEST', studentUpdate),
-
 ]);

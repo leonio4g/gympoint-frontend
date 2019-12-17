@@ -1,24 +1,24 @@
-export function planUpdateRequest(data){
-  return{
-  type: '@plan/PLAN_UPDATE_REQUEST',
-  payload: {data},
+export function planUpdateRequest(data) {
+  return {
+    type: '@plan/PLAN_UPDATE_REQUEST',
+    payload: { data },
+  };
 }
-}
-export function planData(data){
-  return{
+export function planData(data) {
+  return {
     type: '@plan/PLAN_DATA',
-    payload:{data},
-  }
+    payload: { data },
+  };
 }
-export function planUpdateSuccess(plan){
-  return{
+export function planUpdateSuccess(plan) {
+  return {
     type: '@plan/PLAN_UPDATE_SUCCESS',
-    payload: {plan},
-  }
+    payload: { plan },
+  };
 }
 
-export function planFailure(){
-  return{
-    type:'@plan/PLAN_FAILURE',
-  }
+export function planFailure() {
+  return {
+    type: '@plan/PLAN_FAILURE',
+  };
 }

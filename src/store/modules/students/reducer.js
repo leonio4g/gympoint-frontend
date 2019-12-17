@@ -2,7 +2,7 @@ import produce from 'immer';
 
 const INITIAL_STATE = {
   students: null,
-}
+};
 
 export default function students(state = INITIAL_STATE, action) {
   return produce(state, draft => {
@@ -24,5 +24,5 @@ export default function students(state = INITIAL_STATE, action) {
       }
       default:
     }
-  })
+  });
 }

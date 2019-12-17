@@ -4,8 +4,8 @@ import { signInSuccess, signFailure } from './actions';
 import api from '~/services/api';
 import history from '~/services/history';
 
-export function* signIn({payload}){
-  try{
+export function* signIn({ payload }) {
+  try {
     const { email, password } = payload;
 
     const response = yield call(api.post, 'sessions', {
@@ -15,7 +15,7 @@ export function* signIn({payload}){
 
     const { token, user } = response.data;
 
-    if(!user.provider){
+    if (!user.provider) {
       toast.error('Usuario não é Administrador');
       return;
     }
@@ -24,22 +24,22 @@ export function* signIn({payload}){
     yield put(signInSuccess(token, user));
 
     history.push('/students');
-  }catch(err){
+  } catch (err) {
     toast.error('Falha na autenticação, Verifique seus dados');
     yield put(signFailure());
   }
 }
-export function setToken({payload}){
-  if(!payload) return;
+export function setToken({ payload }) {
+  if (!payload) return;
 
   const { token } = payload.auth;
 
-  if(token) {
+  if (token) {
     api.defaults.headers.Authorization = `Bearer ${token}`;
   }
 }
 
-export function signOut(){
+export function signOut() {
   history.push('/');
 }
 

@@ -20,7 +20,6 @@ export default function DatePicker({ name, onChangeDate }) {
     });
   }, [ref.current]); // eslint-disable-line
 
-
   return (
     <>
       <ReactDatePicker

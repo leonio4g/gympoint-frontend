@@ -28,9 +28,6 @@ export default function Routes() {
       <Route path="/plans/create" component={PlanCreate} isPrivate />
       <Route path="/plans/edit" component={PlanEdit} isPrivate />
       <Route exact path="/help-order" component={HelpOrder} isPrivate />
-      <Route path="/help-order/list" component={HelpOrder} isPrivate />
-
-
     </Switch>
-  )
+  );
 }

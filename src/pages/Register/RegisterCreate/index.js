@@ -2,14 +2,14 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 
 import { addMonths, format } from 'date-fns';
-import { formatPrice } from '~/util/format';
 import { toast } from 'react-toastify';
+import * as Yup from 'yup';
+import { formatPrice } from '~/util/format';
 
 import ReactSelect from '../ReactSelect';
 import DatePickerInput from '../DatePickerInput';
 import ReactAsyncSelect from '../ReactAsyncSelect';
 
-import * as Yup from 'yup';
 import api from '~/services/api';
 import history from '~/services/history';
 
@@ -21,27 +21,21 @@ const schema = Yup.object().shape({
   start_date: Yup.date().required('Escolha da Data Inicial obrigatória'),
 });
 
-
 export default function EnrollmentCreate() {
-
-  const [ plans , setPlans] = useState([]);
-  const [ startDate, setStartDate ] = useState(null);
-  const [ planSelect, setPlanSelect ] = useState('');
-  const [ totalPrice, setTotalPrice ] = useState('');
-
+  const [plans, setPlans] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [planSelect, setPlanSelect] = useState('');
+  const [totalPrice, setTotalPrice] = useState('');
 
   useEffect(() => {
+    async function loadPlans() {
+      const response = await api.get('plans');
 
-      async function loadPlans(){
-        const response  = await api.get('plans');
-
-     setPlans(response.data);
-
-      }
+      setPlans(response.data);
+    }
 
     loadPlans();
-
-  },[ setPlans]);
+  }, [setPlans]);
 
   const endDate = useMemo(() => {
     if (planSelect !== '') {
@@ -58,8 +52,8 @@ export default function EnrollmentCreate() {
 
   const filterStudents = inputValue => {
     async function loadStudents() {
-      const response = await api.get(`student`,{
-        params:{name: inputValue}
+      const response = await api.get(`student`, {
+        params: { name: inputValue },
       });
 
       return response.data;
@@ -70,12 +64,12 @@ export default function EnrollmentCreate() {
 
   async function handleSubmit(data) {
     try {
-      await api.post('enrollments',data);
+      await api.post('enrollments', data);
 
       toast.success('Matricula Efetuada com Sucesso');
       history.push('/register');
     } catch (err) {
-      toast.error(err.response.data.error)
+      toast.error(err.response.data.error);
     }
   }
 
@@ -95,46 +89,54 @@ export default function EnrollmentCreate() {
       <Header>
         <p>Cadastro de Matricula</p>
         <div>
-          <button id="voltar" type="button" onClick={handleBack} >Voltar</button>
-          <button id="salvar" type="submit" form="formsave" >Salvar</button>
-
+          <button id="voltar" type="button" onClick={handleBack}>
+            Voltar
+          </button>
+          <button id="salvar" type="submit" form="formsave">
+            Salvar
+          </button>
         </div>
       </Header>
       <Content>
-        <Form id="formsave" schema={schema} onSubmit={handleSubmit}  >
+        <Form id="formsave" schema={schema} onSubmit={handleSubmit}>
           <div id="column">
             <Label>Aluno</Label>
             <ReactAsyncSelect name="students_id" options={loadOptions} />
           </div>
-          <div id="row" >
-            <div id="inputRow" >
-            <Label>Plano</Label>
-            <div id="select" >
-            <ReactSelect
-            className="basic-sigle"
-            classNamePrefix="Selecione Plano"
-            onChange={plan => setPlanSelect(plan)}
-            options={plans}
-            name="plan_id"
-            />
+          <div id="row">
+            <div id="inputRow">
+              <Label>Plano</Label>
+              <div id="select">
+                <ReactSelect
+                  className="basic-sigle"
+                  classNamePrefix="Selecione Plano"
+                  onChange={plan => setPlanSelect(plan)}
+                  options={plans}
+                  name="plan_id"
+                />
+              </div>
             </div>
-            </div>
-            <div id="inputRow" >
-                <Label>Data de inicio</Label>
-                <DatePickerInput
+            <div id="inputRow">
+              <Label>Data de inicio</Label>
+              <DatePickerInput
                 name="start_date"
                 onChangeDate={data => setStartDate(data)}
-                />
-                </div>
-                <div id="inputRow" >
-                <Label>Data de Termino</Label>
-                <Input name="end_date" type="text" value={endDate} readOnly />
-                </div>
-                <div id="inputRow" >
-                <Label>Preço Total</Label>
-                <Input name="total_price" type="text" value={totalPrice} readOnly />
-                </div>
-                </div>
+              />
+            </div>
+            <div id="inputRow">
+              <Label>Data de Termino</Label>
+              <Input name="end_date" type="text" value={endDate} readOnly />
+            </div>
+            <div id="inputRow">
+              <Label>Preço Total</Label>
+              <Input
+                name="total_price"
+                type="text"
+                value={totalPrice}
+                readOnly
+              />
+            </div>
+          </div>
         </Form>
       </Content>
     </Container>

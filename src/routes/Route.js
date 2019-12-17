@@ -15,13 +15,12 @@ export default function RouteWapper({
   const { signed } = store.getState().auth;
 
   if (!signed && isPrivate) {
-    return <Redirect to="/" />
+    return <Redirect to="/" />;
   }
 
   if (signed && !isPrivate) {
-    return <Redirect to="/students" />
+    return <Redirect to="/students" />;
   }
-
 
   const Layout = signed ? DefaultLayout : AuthLayout;
 
@@ -34,14 +33,14 @@ export default function RouteWapper({
         </Layout>
       )}
     />
-  )
-
+  );
 }
 RouteWapper.propTypes = {
   isPrivate: PropTypes.bool,
-  component: PropTypes.oneOfType([PropTypes.element, PropTypes.func]).isRequired,
-}
+  component: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
+    .isRequired,
+};
 
 RouteWapper.defaultProps = {
   isPrivate: false,
-}
+};

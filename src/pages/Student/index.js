@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import api from '~/services/api';
-import { MdDelete, MdCreate} from 'react-icons/md';
-import history from '~/services/history';
+import { MdDelete, MdCreate } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
+import api from '~/services/api';
+import history from '~/services/history';
 import { studentData } from '~/store/modules/students/actions';
 import { Container, Header, StudentTable, Content } from './styles';
 
 export default function Student() {
-
   const dispatch = useDispatch();
   const [students, setStudents] = useState([]);
   const [search, setSearch] = useState([]);
@@ -15,7 +14,7 @@ export default function Student() {
   useEffect(() => {
     async function listStudents() {
       const response = await api.get('student', {
-        params: { name: search }
+        params: { name: search },
       });
 
       setStudents(response.data);
@@ -24,7 +23,7 @@ export default function Student() {
   }, [setStudents, search]);
 
   function handleRegister() {
-    history.push('/students/create')
+    history.push('/students/create');
   }
 
   function handleSeach(e) {
@@ -37,8 +36,7 @@ export default function Student() {
   }
 
   async function handleDelete(student) {
-
-    const confirm = window.confirm(`Cofirma que Quer deletar ${student.name}`);//eslint-disable-line
+    const confirm = window.confirm(`Cofirma que Quer deletar ${student.name}`); //eslint-disable-line
     if (confirm) {
       await api.delete(`student/${student.id}`);
 
@@ -46,8 +44,7 @@ export default function Student() {
         students.filter(e => {
           return e.id !== student.id;
         })
-      )
-
+      );
     }
   }
 
@@ -56,8 +53,15 @@ export default function Student() {
       <Header>
         <p>Gerenciando Alunos</p>
         <div>
-          <button type="submit" onClick={handleRegister} >Cadastrar</button>
-          <input name="name" type="text" onChange={e => handleSeach(e)} placeholder="Buscar Aluno" />
+          <button type="submit" onClick={handleRegister}>
+            Cadastrar
+          </button>
+          <input
+            name="name"
+            type="text"
+            onChange={e => handleSeach(e)}
+            placeholder="Buscar Aluno"
+          />
         </div>
       </Header>
       <Content>
@@ -67,33 +71,36 @@ export default function Student() {
               <th>Name</th>
               <th>Email</th>
               <th>Idade</th>
-              <th></th>
             </tr>
           </thead>
 
-          <tbody >
+          <tbody>
             {students.map(student => (
-              <tr key={student.id} >
+              <tr key={student.id}>
                 <td>{student.name}</td>
                 <td>{student.email}</td>
                 <td>{student.age}</td>
-                <td id="actions" >
-                  <button id="edit" onClick={() => handleEdit(student)} >
+                <td id="actions">
+                  <button
+                    id="edit"
+                    type="button"
+                    onClick={() => handleEdit(student)}
+                  >
                     <MdCreate size={20} color="#4d85ee" />
                   </button>
-                  <button id="delete" onClick={() => handleDelete(student)} >
+                  <button
+                    id="delete"
+                    type="button"
+                    onClick={() => handleDelete(student)}
+                  >
                     <MdDelete size={20} color="#de3b3b" />
                   </button>
                 </td>
               </tr>
-
             ))}
           </tbody>
-
         </StudentTable>
-
       </Content>
-
     </Container>
   );
 }

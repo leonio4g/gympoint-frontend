@@ -8,10 +8,11 @@ import { store, persistor } from './store';
 import Routes from './routes';
 import history from './services/history';
 import GlobalStyled from '~/styles/GlobalStyled';
+
 function App() {
   return (
     <Provider store={store}>
-      <PersistGate persistor={persistor} >
+      <PersistGate persistor={persistor}>
         <Router history={history}>
           <Routes />
           <GlobalStyled />

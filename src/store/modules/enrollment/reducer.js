@@ -2,7 +2,7 @@ import produce from 'immer';
 
 const INITIAL_STATE = {
   enrollments: null,
-}
+};
 
 export default function enrollments(state = INITIAL_STATE, action) {
   return produce(state, draft => {
@@ -24,5 +24,5 @@ export default function enrollments(state = INITIAL_STATE, action) {
       }
       default:
     }
-  })
+  });
 }

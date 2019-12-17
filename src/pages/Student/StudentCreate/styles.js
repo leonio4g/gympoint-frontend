@@ -6,56 +6,51 @@ export const Container = styled.div`
   margin: 5px auto;
   padding: 0 30px;
   span {
-            color: #fb6f91;
-            align-self: flex-start;
-            margin: 0 0 10px;
-        }
-
+    color: #fb6f91;
+    align-self: flex-start;
+    margin: 0 0 10px;
+  }
 `;
 export const Content = styled.div`
-  padding:30px;
-  background:#ffff;
-  border-top: 1px solid rgba(0,0,0,0.1);
-  margin-top:10px;
-  align-self:center;
+  padding: 30px;
+  background: #ffff;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  align-self: center;
 
-form{
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
 
-  display:flex;
-  flex-direction:column;
-  margin-top:10px;
+    input {
+      width: 99%;
+      margin-bottom: 5px;
+    }
 
-  input{
-    width:99%;
-    margin-bottom:5px;
-  }
+    div#column {
+      display: flex;
+      flex-direction: column;
+    }
 
-  div#column{
-    display:flex;
-    flex-direction:column;
+    div#row {
+      display: flex;
+      flex-direction: row;
 
-  }
-
-  div#row{
-    display:flex;
-    flex-direction:row;
-
-    div{
-      margin-right:9px;
-      width:100%;
+      div {
+        margin-right: 9px;
+        width: 100%;
+      }
     }
   }
-
-}
 `;
-
 
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
   max-width: 1200px;
-  width:100%;
+  width: 100%;
 
   p {
     font-size: 25px;
@@ -73,16 +68,16 @@ export const Header = styled.div`
     transition: background 0.2s;
     width: 142px;
   }
-  button#voltar{
-    background:#bcbcbc;
+  button#voltar {
+    background: #bcbcbc;
     margin-right: 10px;
     &:hover {
       background: ${darken(0.04, '#bcbcbc')};
     }
   }
-  button#salvar{
-    text-align:center;
-    background:#ee4b64;
+  button#salvar {
+    text-align: center;
+    background: #ee4b64;
     &:hover {
       background: ${darken(0.02, '#ee4d64')};
     }

@@ -5,7 +5,6 @@ import api from '~/services/api';
 import history from '~/services/history';
 
 export function* planUpdate({ payload }) {
-
   try {
     const { id, title, duration, price } = payload.data;
 
@@ -22,7 +21,4 @@ export function* planUpdate({ payload }) {
     toast.error('Falha ao Editar Plano, Verifique os dados');
   }
 }
-export default all([
-  takeLatest('@plan/PLAN_UPDATE_REQUEST', planUpdate),
-
-]);
+export default all([takeLatest('@plan/PLAN_UPDATE_REQUEST', planUpdate)]);

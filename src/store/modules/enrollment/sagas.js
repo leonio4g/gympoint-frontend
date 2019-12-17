@@ -5,21 +5,22 @@ import api from '~/services/api';
 import history from '~/services/history';
 
 export function* enrollmentUpdate({ payload }) {
-
   try {
+    const { id, start_date, students_id, plan_id } = payload.data;
 
-    const {id} = payload.data;
+    yield call(api.put, `enrollments/${id}`, {
+      start_date,
+      students_id,
+      plan_id,
+    });
 
-    yield call(api.put, `enrollments/${id}`);
+    toast.success('Matricula Editada com Sucesso');
 
-    toast.success('Plano Editado com Sucesso');
-
-    history.push('/plans');
+    history.push('/register');
   } catch (err) {
-    toast.error('Falha ao Editar Plano, Verifique os dados');
+    toast.error(err.response.data.error);
   }
 }
 export default all([
   takeLatest('@enrollment/ENROLLMENT_UPDATE_REQUEST', enrollmentUpdate),
-
 ]);

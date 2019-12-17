@@ -6,58 +6,55 @@ export const Container = styled.div`
   margin: 5px auto;
   padding: 0 30px;
   span {
-            color: #fb6f91;
-            align-self: flex-start;
-            margin: 0 0 10px;
-        }
-
+    color: #fb6f91;
+    align-self: flex-start;
+    margin: 0 0 10px;
+  }
 `;
 export const Content = styled.div`
-  padding:30px;
-  background:#ffff;
-  border-top: 1px solid rgba(0,0,0,0.1);
-  margin-top:10px;
-  align-self:center;
+  padding: 30px;
+  background: #ffff;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  align-self: center;
 
-form{
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
 
-  display:flex;
-  flex-direction:column;
-  margin-top:10px;
+    div#row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
 
-  div#row{
-    display:flex;
-    flex-direction:row;
-    justify-content: space-between;
+      div#inputRow {
+        width: 100%;
+        margin-top: 8px;
+        margin-right: 9px;
 
-    div#inputRow{
-      width:100%;
-      margin-top: 8px;
-      margin-right: 9px;
+        div#select {
+          width: 100%;
+          margin-top: 8px;
 
-      div#select{
-        width:100%;
-        margin-top:8px;
-
-        input{
-          height:30px;
+          input {
+            height: 30px;
+          }
         }
       }
+      input:read-only {
+        background: #ddd;
+      }
     }
-    input:read-only{
-      background:#ddd;
-    }
-  }
   }
 `;
-
 
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
   max-width: 1200px;
-  width:100%;
+  width: 100%;
 
   p {
     font-size: 25px;
@@ -75,16 +72,16 @@ export const Header = styled.div`
     transition: background 0.2s;
     width: 142px;
   }
-  button#voltar{
-    background:#bcbcbc;
+  button#voltar {
+    background: #bcbcbc;
     margin-right: 10px;
     &:hover {
       background: ${darken(0.04, '#bcbcbc')};
     }
   }
-  button#salvar{
-    text-align:center;
-    background:#ee4b64;
+  button#salvar {
+    text-align: center;
+    background: #ee4b64;
     &:hover {
       background: ${darken(0.02, '#ee4d64')};
     }
